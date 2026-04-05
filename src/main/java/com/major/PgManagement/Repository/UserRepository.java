@@ -1,0 +1,14 @@
+package com.major.PgManagement.Repository;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.major.PgManagement.Entities.User;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByUsername(String username);
+
+ 
+}
+
