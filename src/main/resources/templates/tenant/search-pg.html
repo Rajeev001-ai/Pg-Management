@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Search PG | StayNext Tenant</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/dashboard.css}">
+</head>
+<body>
+<div class="container-fluid">
+	<div class="row">
+		<aside th:replace="~{fragments/tenant-sidebar :: sidebar('search-pg')}"></aside>
+		<main class="col-lg-10 p-0 main-panel">
+			<nav class="navbar topbar">
+				<span class="navbar-brand mb-0 h1">Search PG</span>
+				<div class="topbar-meta d-none d-md-flex">
+					<span class="user-chip"><i class="fa-solid fa-magnifying-glass-location"></i> Tenant Search</span>
+				</div>
+			</nav>
+			<div class="dashboard-content">
+				<div class="card form-card mb-4">
+					<div class="card-body p-4">
+						<div class="d-flex flex-column flex-lg-row justify-content-between gap-2 mb-4">
+							<div>
+								<h1 class="h4 fw-black mb-1">Find approved PGs</h1>
+								<p class="text-secondary mb-0">Filter by location, PG type, and rent range.</p>
+							</div>
+						</div>
+						<form class="row g-3" th:action="@{/tenant/search-pg}" method="get">
+							<div class="col-lg-4 col-md-6">
+								<label class="form-label">City or Area</label>
+								<input class="form-control" name="keyword" type="text" placeholder="Enter city or area" th:value="${keyword}">
+							</div>
+							<div class="col-lg-2 col-md-6">
+								<label class="form-label">PG Type</label>
+								<select class="form-select" name="pgType">
+									<option value="">Any type</option>
+									<option th:each="type : ${pgTypes}" th:value="${type}" th:text="${type}" th:selected="${selectedPgType == type}">BOYS</option>
+								</select>
+							</div>
+							<div class="col-lg-2 col-md-6">
+								<label class="form-label">Min Rent</label>
+								<input class="form-control" name="minRent" type="number" min="0" step="100" th:value="${minRent}">
+							</div>
+							<div class="col-lg-2 col-md-6">
+								<label class="form-label">Max Rent</label>
+								<input class="form-control" name="maxRent" type="number" min="0" step="100" th:value="${maxRent}">
+							</div>
+							<div class="col-lg-2 d-grid align-items-end">
+								<button class="btn btn-primary" type="submit"><i class="fa-solid fa-magnifying-glass me-1"></i> Search</button>
+							</div>
+							<div class="col-12">
+								<a class="btn btn-outline-secondary" th:href="@{/tenant/search-pg}"><i class="fa-solid fa-rotate-left me-1"></i> Clear Filters</a>
+							</div>
+						</form>
+					</div>
+				</div>
+
+				<div class="row g-4" th:if="${!#lists.isEmpty(pgListings)}">
+					<div class="col-md-6 col-xl-4" th:each="pg : ${pgListings}">
+						<div class="card pg-card h-100">
+							<img class="pg-card-image"
+								 th:src="${pg.imageUrl != null and !#strings.isEmpty(pg.imageUrl)} ? ${pg.imageUrl} : @{/images/pg-placeholder.svg}"
+								 th:alt="${pg.pgName}">
+							<div class="card-body p-4">
+								<span class="badge badge-soft mb-3" th:text="${pg.pgType}">BOYS</span>
+								<h2 class="h5 fw-bold" th:text="${pg.pgName}">Green Nest PG</h2>
+								<p class="text-secondary mb-2" th:text="${pg.address}">Address</p>
+								<p class="text-secondary mb-3" th:text="${pg.area + ', ' + pg.city}">Area, City</p>
+								<div class="d-flex justify-content-between align-items-center mb-3">
+									<span class="text-secondary">Starting rent</span>
+									<span class="fw-bold">Rs. <span th:text="${pg.monthlyRentStartingFrom}">9000</span></span>
+								</div>
+								<a class="btn btn-primary w-100" th:href="@{/tenant/search-pg/details/{id}(id=${pg.id})}"><i class="fa-solid fa-eye me-1"></i> View Details</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="empty-state" th:if="${#lists.isEmpty(pgListings)}">
+					<i class="fa-solid fa-building-circle-xmark"></i>
+					<h2 class="h5">No approved PG listings found</h2>
+					<p class="text-secondary mb-3">Try changing the city, area, PG type, or rent filters.</p>
+					<a class="btn btn-outline-primary" th:href="@{/tenant/search-pg}">Show All Approved PGs</a>
+				</div>
+			</div>
+		</main>
+	</div>
+</div>
+</body>
+</html>

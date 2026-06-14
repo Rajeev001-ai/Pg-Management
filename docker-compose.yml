@@ -1,0 +1,14 @@
+services:
+  staynext:
+    build: .
+    container_name: staynext
+    env_file:
+      - .env
+    ports:
+      - "${PORT:-8081}:${PORT:-8081}"
+    volumes:
+      - staynext_uploads:/app/uploads
+    restart: unless-stopped
+
+volumes:
+  staynext_uploads:

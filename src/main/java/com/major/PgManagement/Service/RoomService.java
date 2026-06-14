@@ -1,13 +1,19 @@
-package com.major.PgManagement.Service;
+package com.major.pgmanagement.service;
 
-import java.util.List;
-
-import com.major.PgManagement.Entities.Room;
-
+import com.major.pgmanagement.entity.Room;
 import java.util.List;
 
 public interface RoomService {
-    List<Room> getAllRooms();
-    Room saveRoom(Room room);
-}
 
+	Room addRoom(Room room, Long pgListingId);
+
+	List<Room> getRoomsByPgListing(Long pgListingId);
+
+	List<Room> getAvailableRooms(Long pgListingId);
+
+	Room getRoomById(Long roomId);
+
+	Room updateRoom(Long roomId, Room updatedRoom);
+
+	void deleteRoom(Long roomId);
+}

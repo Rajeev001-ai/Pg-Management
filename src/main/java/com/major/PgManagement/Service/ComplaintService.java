@@ -1,11 +1,27 @@
-package com.major.PgManagement.Service;
+package com.major.pgmanagement.service;
 
+import com.major.pgmanagement.entity.Complaint;
+import com.major.pgmanagement.entity.User;
+import com.major.pgmanagement.entity.enums.ComplaintStatus;
 import java.util.List;
 
-import com.major.PgManagement.Entities.Complaint;
-
 public interface ComplaintService {
-    List<Complaint> getAllComplaints();
-    Complaint saveComplaint(Complaint complaint);
-}
 
+	Complaint createComplaint(Complaint complaint, User tenant, Long pgListingId);
+
+	List<Complaint> getComplaintsByTenant(User tenant);
+
+	List<Complaint> getComplaintsByPgListing(Long pgListingId);
+
+	List<Complaint> getAllComplaints();
+
+	List<Complaint> getComplaintsByStatus(ComplaintStatus status);
+
+	List<Complaint> getComplaintsByOwner(User owner);
+
+	Complaint getComplaintById(Long complaintId);
+
+	Complaint markInProgress(Long complaintId);
+
+	Complaint markResolved(Long complaintId);
+}

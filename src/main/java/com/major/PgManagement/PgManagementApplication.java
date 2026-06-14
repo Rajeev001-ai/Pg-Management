@@ -1,4 +1,4 @@
-package com.major.PgManagement;
+package com.major.pgmanagement;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,5 +9,4 @@ public class PgManagementApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PgManagementApplication.class, args);
 	}
-
 }

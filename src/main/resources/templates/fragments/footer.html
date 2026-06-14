@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<footer th:fragment="footer" class="app-footer pt-5 pb-4">
+	<div class="container">
+		<div class="row g-4 align-items-start">
+			<div class="col-lg-5">
+				<div class="d-flex align-items-center fw-bold fs-5 mb-3">
+					<span class="brand-mark"><i class="fa-solid fa-location-dot"></i></span>
+					<span>StayNext</span>
+				</div>
+				<p class="mb-0">Smart PG Marketplace & Management Platform</p>
+			</div>
+			<div class="col-md-4 col-lg-3">
+				<h3 class="h6 text-white fw-bold mb-3">Quick Links</h3>
+				<div class="d-grid gap-2">
+					<a th:href="@{/about}">About</a>
+					<a th:href="@{/features}">Features</a>
+					<a th:href="@{/contact}">Contact</a>
+					<a th:href="@{/}">Home</a>
+					<a th:href="@{/login}">Login</a>
+				</div>
+			</div>
+			<div class="col-md-4 col-lg-4">
+				<h3 class="h6 text-white fw-bold mb-3">Contact</h3>
+				<p class="mb-2"><i class="fa-solid fa-envelope me-2"></i> support@staynext.com</p>
+				<p class="mb-0"><i class="fa-solid fa-phone me-2"></i> +91 98765 43210</p>
+			</div>
+		</div>
+		<hr class="border-secondary my-4">
+		<div class="d-flex flex-column flex-md-row justify-content-between gap-2 small">
+			<span>© 2026 StayNext. All Rights Reserved.</span>
+			<span>Find, Book & Manage PGs Smarter</span>
+		</div>
+	</div>
+</footer>
+</body>
+</html>

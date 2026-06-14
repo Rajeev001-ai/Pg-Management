@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-label="PG image placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#dbeafe"/>
+      <stop offset="100%" stop-color="#eff6ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" fill="url(#bg)"/>
+  <rect x="300" y="220" width="600" height="360" rx="28" fill="#ffffff" opacity="0.9"/>
+  <path d="M380 500h440V330L600 185 380 330v170Z" fill="#2563eb" opacity="0.88"/>
+  <path d="M470 500V365h110v135H470Zm170 0V365h90v90h-90v45Z" fill="#ffffff"/>
+  <text x="600" y="635" text-anchor="middle" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#0f766e">StayNext</text>
+</svg>

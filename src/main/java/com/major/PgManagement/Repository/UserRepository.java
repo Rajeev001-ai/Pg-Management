@@ -1,14 +1,19 @@
-package com.major.PgManagement.Repository;
+package com.major.pgmanagement.repository;
 
+import com.major.pgmanagement.entity.User;
+import com.major.pgmanagement.entity.enums.AccountStatus;
+import com.major.pgmanagement.entity.enums.Role;
+import java.util.List;
 import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.major.PgManagement.Entities.User;
-
 public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findByUsername(String username);
 
- 
+	Optional<User> findByEmail(String email);
+
+	boolean existsByEmail(String email);
+
+	List<User> findByRole(Role role);
+
+	List<User> findByRoleAndAccountStatus(Role role, AccountStatus accountStatus);
 }
-
