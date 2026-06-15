@@ -5,7 +5,9 @@ import com.major.pgmanagement.entity.User;
 import com.major.pgmanagement.entity.enums.PgStatus;
 import com.major.pgmanagement.entity.enums.PgType;
 import com.major.pgmanagement.repository.PgListingRepository;
+import jakarta.persistence.criteria.Predicate;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.util.StringUtils;
 import org.springframework.stereotype.Service;
@@ -79,7 +81,31 @@ public class PgListingServiceImpl implements PgListingService {
 	@Override
 	public List<PgListing> searchApprovedPgListings(String keyword, PgType pgType, BigDecimal minRent, BigDecimal maxRent) {
 		String cleanKeyword = StringUtils.hasText(keyword) ? keyword.trim() : null;
-		return pgListingRepository.searchApprovedPgListings(PgStatus.APPROVED, cleanKeyword, pgType, minRent, maxRent);
+		return pgListingRepository.findAll((root, query, criteriaBuilder) -> {
+			List<Predicate> predicates = new ArrayList<>();
+			predicates.add(criteriaBuilder.equal(root.get("status"), PgStatus.APPROVED));
+
+			if (StringUtils.hasText(cleanKeyword)) {
+				String searchPattern = "%" + cleanKeyword.toLowerCase() + "%";
+				Predicate cityMatches = criteriaBuilder.like(criteriaBuilder.lower(root.get("city")), searchPattern);
+				Predicate areaMatches = criteriaBuilder.like(criteriaBuilder.lower(root.get("area")), searchPattern);
+				predicates.add(criteriaBuilder.or(cityMatches, areaMatches));
+			}
+
+			if (pgType != null) {
+				predicates.add(criteriaBuilder.equal(root.get("pgType"), pgType));
+			}
+
+			if (minRent != null) {
+				predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("monthlyRentStartingFrom"), minRent));
+			}
+
+			if (maxRent != null) {
+				predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("monthlyRentStartingFrom"), maxRent));
+			}
+
+			return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+		});
 	}
 
 	@Override
